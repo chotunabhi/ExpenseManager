@@ -1,0 +1,28 @@
+<!-- ~ Hibernate, Relational Persistence for Idiomatic Java ~ ~ License: 
+	GNU Lesser General Public License (LGPL), version 2.1 or later. ~ See the 
+	lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- Database connection settings -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+
+		<!-- Assume test is the database name -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/ExpenseManager</property>
+		<property name="hibernate.connection.username">abhi</property>
+		<property name="hibernate.connection.password">abhi</property>
+
+		<!-- Echo all sql to stdout -->
+		<property name="show_sql">true</property>
+		
+		<!-- drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
+		
+		<!-- Names the annotated entity class -->
+		<mapping class="com.abhi.expenseManager.objectModels.User"/>
+	</session-factory>
+</hibernate-configuration>
