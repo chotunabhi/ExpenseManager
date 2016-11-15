@@ -1,5 +1,7 @@
 package com.abhi.expenseManager.resources;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,9 +24,19 @@ public class UserResource {
 		return userService.getUserById(userId);
 	}
 	
+	@GET
+	public List<User> getUsers(){
+		return userService.getAllUsers();
+	}
+	
 	@POST
 	@Consumes(value={MediaType.APPLICATION_JSON})
 	public User createUser(User user){
 		return userService.createUser(user);
+	}
+	
+	@Path("{userid}/accounts")
+	public AccountResource getAccount() {
+		return new AccountResource();
 	}
 }

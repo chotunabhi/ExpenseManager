@@ -2,6 +2,7 @@ package com.abhi.expenseManager.services;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.abhi.expenseManager.objectModels.User;
@@ -21,7 +22,7 @@ public class UserService {
 
 	public User getUserById(String userId) {
 		Session session = PersistantFactory.getSession();
-		User user = session.get(User.class, userId);
+		User user = (User) session.get(User.class, userId);
 		session.close();
 		
 		return user;
@@ -35,5 +36,29 @@ public class UserService {
 		session.close();
 		
 		return user;
+	}
+
+	public List<User> getAllUsers() {
+		Session session = PersistantFactory.getSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from user_details");
+		session.getTransaction().commit();
+		List<User> users = query.list();
+		session.close();
+		
+		
+		return users;
+	}
+
+	public List<User> getUserByName(String userName) {
+		Session session = PersistantFactory.getSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from user_details where userName= :userName");
+		query.setParameter("userName", userName);
+		session.getTransaction().commit();
+		List<User> users = query.list();
+		session.close();
+		
+		return users;
 	}
 }

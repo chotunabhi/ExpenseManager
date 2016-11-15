@@ -24,5 +24,6 @@
 		
 		<!-- Names the annotated entity class -->
 		<mapping class="com.abhi.expenseManager.objectModels.User"/>
+		<mapping class="com.abhi.expenseManager.objectModels.Account"/>
 	</session-factory>
 </hibernate-configuration>
