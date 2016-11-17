@@ -14,21 +14,6 @@ public class AccountService {
 	private static AccountService accountService = null;
 	
 	private AccountService(){
-		/*Account account = new Account();
-		account.setAccountId(1);
-		account.setAccountName("Salary");
-		account.setBalance(1000);
-		account.setCurrency("INR");
-		User user = new User();
-		user.setEmailId("chotu.n.abhi@gmail.com");
-		account.setUser(user );
-		
-		Session session = PersistantFactory.getSession();
-		session.beginTransaction();
-		session.save(account);
-		session.getTransaction().commit();
-		session.close();*/
-		
 	}
 	
 	public static AccountService getInstance(){
@@ -40,11 +25,12 @@ public class AccountService {
 	
 	public Account getAccountById(long accountId,String userId){
 		Session session = PersistantFactory.getSession();
+		session.beginTransaction();
 		Query query = session.createQuery("from accounts where user_id=? and account_id=?");
 		query.setString(0, userId);
 		query.setLong(1, accountId);
 		List<Account> accounts = query.list();
-		
+		session.getTransaction().commit();
 		session.close();
 		
 		return accounts.size() > 0 ?(Account) accounts.get(0):null;
@@ -66,9 +52,11 @@ public class AccountService {
 
 	public List<Account> getAcccounts(String userId) {
 		Session session = PersistantFactory.getSession();
+		session.beginTransaction();
 		Query query = session.createQuery("from accounts where user_id=?");
 		query.setParameter(0, userId);
 		List<Account> accounts = query.list();
+		session.getTransaction().commit();
 		session.close();
 		
 		return accounts;

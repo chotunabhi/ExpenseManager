@@ -22,7 +22,9 @@ public class UserService {
 
 	public User getUserById(String userId) {
 		Session session = PersistantFactory.getSession();
+		session.beginTransaction();
 		User user = (User) session.get(User.class, userId);
+		session.getTransaction().commit();
 		session.close();
 		
 		return user;
