@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,13 +27,22 @@ public class Category {
 	private String categoryName;
 	@NotFound(action=NotFoundAction.IGNORE)
 	@ManyToOne
-	@JoinColumn(name="parent_category_id")
+	@JoinColumn(name="parent_category_id",foreignKey=@ForeignKey(name="FK_parent_category_id"))
 	private Category parentCategory;
 	@OneToMany(mappedBy="parentCategory",fetch=FetchType.EAGER)
 	private List<Category> childCategories;
 	@Column(name = "category_level")
 	private int categoryLevel;
+	@ManyToOne
+	@JoinColumn(name="user_id",foreignKey=@ForeignKey(name="FK_user_id"))
+	private User user;
 	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public int getCategoryLevel() {
 		return categoryLevel;
 	}

@@ -1,12 +1,18 @@
 package com.abhi.expenseManager.objectModels;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlElement;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ * @author abhi
+ */
 @Entity(name="user_details")
 @XmlRootElement(name="user")
 public class User {
@@ -15,12 +21,30 @@ public class User {
 	@Column(name="email_id")
 	private String emailId;
 	private String password;
+	@Column(name="phone_number")
 	private String phoneNumber;
 	private int age;
 	private String gender;
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="primary_account_id",foreignKey=@ForeignKey(name="FK_account_id"))
+	private Account primaryAccount;
+	@Column(name="is_active")
+	private boolean active;
 	
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 	public String getName() {
 		return name;
+	}
+	public Account getPrimaryAccount() {
+		return primaryAccount;
+	}
+	public void setPrimaryAccount(Account primaryAccount) {
+		this.primaryAccount = primaryAccount;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -31,7 +55,6 @@ public class User {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	@XmlTransient	
 	public String getPassword() {
 		return password;
 	}

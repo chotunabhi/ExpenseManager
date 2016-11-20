@@ -2,6 +2,7 @@ package com.abhi.expenseManager.objectModels;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class Account {
 	private String currency;
 	private String description;
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id",foreignKey=@ForeignKey(name="FK_user_id"))
 	private User user;
 	
 	public long getAccountId() {

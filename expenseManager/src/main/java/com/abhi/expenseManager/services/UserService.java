@@ -9,7 +9,8 @@ import com.abhi.expenseManager.objectModels.User;
 
 public class UserService {
 	private static UserService userService = null;
-
+	Session session = null;
+	
 	private UserService(){
 	}
 
@@ -21,7 +22,7 @@ public class UserService {
 	}
 
 	public User getUserById(String userId) {
-		Session session = PersistantFactory.getSession();
+		session = PersistantFactory.getSession();
 		session.beginTransaction();
 		User user = (User) session.get(User.class, userId);
 		session.getTransaction().commit();
@@ -31,17 +32,23 @@ public class UserService {
 	}
 
 	public User createUser(User user) {
-		Session session = PersistantFactory.getSession();
+		session = PersistantFactory.getSession();
 		session.beginTransaction();
-		session.saveOrUpdate(user);
+		
+		if(user.getPrimaryAccount() != null)
+			user.getPrimaryAccount().setUser(user);
+		user.setActive(true);
+		session.save(user);
+		
 		session.getTransaction().commit();
 		session.close();
-		
+
+		user.setPassword(null);
 		return user;
 	}
 
 	public List<User> getAllUsers() {
-		Session session = PersistantFactory.getSession();
+		session = PersistantFactory.getSession();
 		session.beginTransaction();
 		Query query = session.createQuery("from user_details");
 		session.getTransaction().commit();
@@ -53,7 +60,7 @@ public class UserService {
 	}
 
 	public List<User> getUserByName(String userName) {
-		Session session = PersistantFactory.getSession();
+		session = PersistantFactory.getSession();
 		session.beginTransaction();
 		Query query = session.createQuery("from user_details where userName= :userName");
 		query.setParameter("userName", userName);
@@ -62,5 +69,24 @@ public class UserService {
 		session.close();
 		
 		return users;
+	}
+
+	public User deleteAccount(String userId) {
+		session = PersistantFactory.getSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("select u.emailId,u.active from user_details u where u.emailId=:emailId");
+		query.setString("emailId", userId);
+		List<User> list = query.list();
+		System.out.println(list.getClass());
+		for (Object user : list) {
+			System.out.println(user.getClass());
+		}
+//		User user = list.
+//		user.setActive(false);
+//		session.update(user);
+		session.getTransaction().commit();
+		
+		return new User();
 	}
 }

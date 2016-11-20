@@ -3,6 +3,7 @@ package com.abhi.expenseManager.resources;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -17,26 +18,41 @@ import com.abhi.expenseManager.services.UserService;
 @Produces(value={MediaType.APPLICATION_JSON,MediaType.APPLICATION_JSON})
 public class UserResource {
 	UserService userService = UserService.getInstance();
-	
+
+	//gets user based on the userid
 	@GET
 	@Path("{userId}")
 	public User getUser(@PathParam("userId")String userId){
 		return userService.getUserById(userId);
 	}
-	
+
+	//get all users
 	@GET
 	public List<User> getUsers(){
 		return userService.getAllUsers();
 	}
-	
+
+	//create a user
 	@POST
 	@Consumes(value={MediaType.APPLICATION_JSON})
 	public User createUser(User user){
 		return userService.createUser(user);
 	}
 	
+	@DELETE
+	@Path("{userId}")
+	public User deleteAccount(@PathParam("userId")String userId){
+		return userService.deleteAccount(userId);
+	}
+
+	public User updateUser(User user){
+		return user;
+	}
+	
+	//get account related data	
 	@Path("{userid}/accounts")
 	public AccountResource getAccount() {
 		return new AccountResource();
 	}
+
 }

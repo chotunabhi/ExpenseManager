@@ -16,4 +16,16 @@ public class CategoryResource {
 	public List<Category> getCategories(){
 		return categoryService.getCategories();
 	}
+	
+	public Category updateCategory() {
+		return null;
+	}
+	
+	public Category createCategory(Category category){
+		return category;
+	}
+	
+	public boolean deleteCategory(Category category){
+		return false;
+	}
 }

@@ -31,4 +31,8 @@ public class AccountResource {
 	public List<Account> getAccounts(@PathParam("userid") String userId){
 		return accountService.getAcccounts(userId);
 	}
+	
+	public Account updateAccount(Account account){
+		return account;
+	}
 }

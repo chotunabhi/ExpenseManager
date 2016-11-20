@@ -64,4 +64,14 @@ public class CategoryService {
 		return categories;
 	}
 	
+	public Category createCategory(Category category){
+		Session session = PersistantFactory.getSession();
+		session.beginTransaction();
+		
+		session.save(category);
+		
+		return category;
+		
+	}
+	
 }
