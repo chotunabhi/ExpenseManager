@@ -6,11 +6,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import com.abhi.expenseManager.objectModels.Account;
 import com.abhi.expenseManager.services.AccountService;
+import com.abhi.expenseManager.utils.Response;
 
 @Path("/")
 public class AccountResource {
@@ -18,8 +17,11 @@ public class AccountResource {
 	
 	@GET
 	@Path("{accountId}")
-	public Account getAccount(@PathParam("accountId")long accountId,@PathParam("userid") String userId){
-		return accountService.getAccountById(accountId,userId);
+	public Response getAccount(@PathParam("accountId")long accountId,@PathParam("userid") String userId){
+		Response response = new Response();
+//		response.setResponse(accountService.getAccountById(accountId,userId));
+		
+		return response;
 	}
 	
 	@POST

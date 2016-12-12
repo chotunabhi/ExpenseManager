@@ -5,11 +5,15 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.abhi.expenseManager.dao.UserDao;
 import com.abhi.expenseManager.objectModels.User;
+import com.abhi.expenseManager.utils.HibernateUtil;
+import com.abhi.expenseManager.utils.Response;
 
 public class UserService {
+	private UserDao userDao = UserDao.getInstance();
 	private static UserService userService = null;
-	Session session = null;
+	
 	
 	private UserService(){
 	}
@@ -22,71 +26,26 @@ public class UserService {
 	}
 
 	public User getUserById(String userId) {
-		session = PersistantFactory.getSession();
-		session.beginTransaction();
-		User user = (User) session.get(User.class, userId);
-		session.getTransaction().commit();
-		session.close();
-		
-		return user;
+		return userDao.getUserById(userId);
 	}
 
-	public User createUser(User user) {
-		session = PersistantFactory.getSession();
-		session.beginTransaction();
-		
-		if(user.getPrimaryAccount() != null)
-			user.getPrimaryAccount().setUser(user);
-		user.setActive(true);
-		session.save(user);
-		
-		session.getTransaction().commit();
-		session.close();
-
-		user.setPassword(null);
-		return user;
+	public boolean createUser(User user) {
+		return userDao.createUser(user);
 	}
 
 	public List<User> getAllUsers() {
-		session = PersistantFactory.getSession();
-		session.beginTransaction();
-		Query query = session.createQuery("from user_details");
-		session.getTransaction().commit();
-		List<User> users = query.list();
-		session.close();
-		
-		
-		return users;
+		return userDao.getAllUsers();
 	}
 
 	public List<User> getUserByName(String userName) {
-		session = PersistantFactory.getSession();
-		session.beginTransaction();
-		Query query = session.createQuery("from user_details where userName= :userName");
-		query.setParameter("userName", userName);
-		session.getTransaction().commit();
-		List<User> users = query.list();
-		session.close();
-		
-		return users;
+		return userDao.getUserByName(userName);
 	}
 
 	public User deleteAccount(String userId) {
-		session = PersistantFactory.getSession();
-		session.beginTransaction();
-		
-		Query query = session.createQuery("select u.emailId,u.active from user_details u where u.emailId=:emailId");
-		query.setString("emailId", userId);
-		List<User> list = query.list();
-		System.out.println(list.getClass());
-		for (Object user : list) {
-			System.out.println(user.getClass());
-		}
-//		User user = list.
-//		user.setActive(false);
-//		session.update(user);
-		session.getTransaction().commit();
-		
-		return new User();
+		return userDao.deleteAccount(userId);
 	}
+	
+	/*public User loginUser(User user){
+		
+	}*/
 }

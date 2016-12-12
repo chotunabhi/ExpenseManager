@@ -6,15 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author abhi
  */
 @Entity(name="user_details")
 @XmlRootElement(name="user")
+@NamedQuery(name="byId",query="select u.emailId,u.phoneNumber,u.age,u.gender from user_details u where u.emailId =:emailId and u.active=true")
 public class User {
 	private String name;
 	@Id
@@ -78,5 +79,10 @@ public class User {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	
+	@Override
+	public String toString(){
+		return this.emailId+" "+this.age+" "+this.gender;
 	}
 }

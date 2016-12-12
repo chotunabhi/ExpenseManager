@@ -15,7 +15,7 @@ import com.abhi.expenseManager.objectModels.User;
 import com.abhi.expenseManager.services.UserService;
 
 @Path("users")
-@Produces(value={MediaType.APPLICATION_JSON,MediaType.APPLICATION_JSON})
+@Produces(value={MediaType.APPLICATION_JSON})
 public class UserResource {
 	UserService userService = UserService.getInstance();
 
@@ -35,10 +35,10 @@ public class UserResource {
 	//create a user
 	@POST
 	@Consumes(value={MediaType.APPLICATION_JSON})
-	public User createUser(User user){
+	public Boolean createUser(User user){
 		return userService.createUser(user);
 	}
-	
+
 	@DELETE
 	@Path("{userId}")
 	public User deleteAccount(@PathParam("userId")String userId){
@@ -48,7 +48,7 @@ public class UserResource {
 	public User updateUser(User user){
 		return user;
 	}
-	
+
 	//get account related data	
 	@Path("{userid}/accounts")
 	public AccountResource getAccount() {

@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.abhi.expenseManager.objectModels.Category;
+import com.abhi.expenseManager.utils.HibernateUtil;
 
 public class CategoryService {
 	private static CategoryService categoryService = null;
@@ -50,7 +51,7 @@ public class CategoryService {
 	}
 
 	public List<Category> getCategories() {
-		Session session = PersistantFactory.getSession();
+		Session session = HibernateUtil.getSession();
 		session.beginTransaction();
 		
 		Query query = (Query) session.createQuery("select distinct e from categories e where e.categoryLevel = ?");
@@ -65,7 +66,7 @@ public class CategoryService {
 	}
 	
 	public Category createCategory(Category category){
-		Session session = PersistantFactory.getSession();
+		Session session = HibernateUtil.getSession();
 		session.beginTransaction();
 		
 		session.save(category);
