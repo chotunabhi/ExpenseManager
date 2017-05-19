@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: expenseManager
-Bundle-SymbolicName: expenseManager
-Bundle-Version: 1.0.0.qualifier
-Export-Package: com.abhi.expenseManager.objectModels,
- com.abhi.expenseManager.resources,
- com.abhi.expenseManager.services
