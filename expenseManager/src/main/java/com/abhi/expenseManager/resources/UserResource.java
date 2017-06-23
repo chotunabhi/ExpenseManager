@@ -11,8 +11,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.abhi.expenseManager.objectModels.Test;
 import com.abhi.expenseManager.objectModels.User;
 import com.abhi.expenseManager.services.UserService;
+import com.abhi.expenseManager.utils.Response;
 
 @Path("users")
 @Produces(value={MediaType.APPLICATION_JSON})
@@ -31,7 +33,7 @@ public class UserResource {
 	public List<User> getUsers(){
 		return userService.getAllUsers();
 	}
-
+	
 	//create a user
 	@POST
 	@Consumes(value={MediaType.APPLICATION_JSON})
@@ -55,4 +57,11 @@ public class UserResource {
 		return new AccountResource();
 	}
 
+	@GET
+	@Path("test")
+	public Test getTest(){
+		Test<User> test = new Test<>();
+		test.setUserNames(userService.getAllUsers());
+		return test;
+	}
 }
